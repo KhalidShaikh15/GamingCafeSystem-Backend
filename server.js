@@ -8,12 +8,15 @@ const createDashboardRoutes = require("./routes/dashboardRoutes");
 const WebSocket = require("ws");
 const GameController = require("./controllers/GameController");
 const ClientManager = require("./services/ClientManager");
+const PcRegistry = require("./services/PcRegistry");
+
 const app = express();
 app.use(cors());
 
 app.use(express.json());
-const PORT = 5000;  
-const clientManager = new ClientManager();
+const PORT = 5000; 
+const pcRegistry = new PcRegistry(); 
+const clientManager = new ClientManager(pcRegistry);
 const dashboardSocketManager = new DashboardSocketManager();
 eventBus.on("pcsUpdated", () => {
 

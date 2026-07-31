@@ -14,11 +14,7 @@ class ClientManager {
 
     this.clients.set(pcId, socket);
 
-    const pc = this.pcs.find(p => p.pcId === pcId);
-
-    if (pc) {
-        pc.connected = true;
-    }
+    this.pcRegistry.setConnected(pcId, true);
 
     console.log(`${pcId} registered successfully.`);
     console.log(`Connected PCs: ${this.clients.size}`);
@@ -29,16 +25,12 @@ unregister(pcId) {
 
     this.clients.delete(pcId);
 
-    const pc = this.pcs.find(p => p.pcId === pcId);
-
-    if (pc) {
-        pc.connected = false;
-    }
+    this.pcRegistry.setConnected(pcId, false);
 
     console.log(`${pcId} disconnected.`);
     console.log(`Connected PCs: ${this.clients.size}`);
 
-}
+}   
 
     lock(pcId) {
 
@@ -84,7 +76,7 @@ unregister(pcId) {
 }
     getConnectedPcs() {
 
-    return this.pcs;
+    return this.pcRegistry.getAll();
 
 }
 
@@ -108,7 +100,7 @@ unregister(pcId) {
 
 async wakePc(pcId) {
 
-    const pc = this.pcs.find(p => p.pcId === pcId);
+    const pc = this.pcRegistry.get(pcId);
 
     if (!pc) {
         console.log(`PC ${pcId} not found.`);
