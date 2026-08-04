@@ -6,27 +6,27 @@ function createSessionRoutes(gameController) {
 
     router.use(express.json());
 
-    router.post("/start-session", (req, res) => {
+    router.post("/start-session", async (req, res) => {
 
-        const { pcId, durationMinutes } = req.body;
+    const { pcId, durationMinutes } = req.body;
 
-        console.log(`Dashboard requested session for ${pcId}`);
+    console.log(`Dashboard requested session for ${pcId}`);
 
-        gameController.startSession(pcId, durationMinutes);
+    await gameController.startSession(pcId, durationMinutes);
 
-        res.json({
-            success: true
-        });
-
+    res.json({
+        success: true
     });
 
-    router.post("/end-session", (req, res) => {
+});
+
+    router.post("/end-session", async (req, res) => {
 
         const { pcId } = req.body;
 
         console.log(`Dashboard requested end session for ${pcId}`);
 
-        gameController.endSession(pcId);
+        await gameController.endSession(pcId);
 
         res.json({
             success: true
@@ -76,7 +76,19 @@ router.post("/wake", async (req, res) => {
 
 });
 
+router.get("/pending-payments", async (req, res) => {
+
+    const payments = await gameController.getPendingPayments();
+
+    res.json(payments);
+
+});
+
+
     return router;
+
+
+
 }
 
 module.exports = createSessionRoutes;

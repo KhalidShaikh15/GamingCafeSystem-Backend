@@ -13,3 +13,23 @@ model PC {
   macAddress String
   connected  Boolean @default(false)
 }
+
+model Session {
+
+  id             Int      @id @default(autoincrement())
+
+  pcId           String
+
+  startTime      DateTime
+
+  endTime        DateTime?
+
+  plannedMinutes Int
+
+  actualMinutes  Int?
+
+  gamingCharge   Float    @default(0)
+
+  status String @default("ACTIVE")
+
+} 

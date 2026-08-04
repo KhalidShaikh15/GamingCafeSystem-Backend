@@ -1,3 +1,4 @@
+const SessionService = require("../services/SessionService");
 const eventBus = require("../events/EventBus");
 class GameController {
 
@@ -5,32 +6,48 @@ class GameController {
 
         this.clientManager = clientManager;
         this.sessionManager = sessionManager;
+        this.sessionService = new SessionService();
+
 
     }
 
-    startSession(pcId, durationMinutes) {
+    async startSession(pcId, durationMinutes) {
+        console.log("========== START SESSION ==========");
+console.log("PC:", pcId);
+console.log("Time:", new Date());
 
     this.sessionManager.startSession(
         pcId,
         durationMinutes
     );
+    await this.sessionService.create(
+    pcId,
+    durationMinutes
+);
 
     this.clientManager.unlock(pcId);
     eventBus.emit("pcsUpdated");
 
 }
 
-    endSession(pcId) {
+    async endSession(pcId) {
 
     console.log();
     console.log(`Session expired for ${pcId}`);
 
     this.sessionManager.endSession(pcId);
+    await this.sessionService.end(pcId);
 
     this.clientManager.lock(pcId);
     eventBus.emit("pcsUpdated");
 
 }
+async getPendingPayments() {
+
+    return await this.sessionService.getPendingPayments();
+
+}
+
 extendSession(pcId, durationMinutes) {
 
     this.sessionManager.extendSession(
