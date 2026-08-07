@@ -66,7 +66,6 @@ class SessionService {
             (endTime - session.startTime) / 60000
         );
 
-        // Temporary pricing: ₹2 per minute
         const gamingCharge = actualMinutes * 2;
 
         await prisma.session.update({
@@ -95,6 +94,21 @@ class SessionService {
                 endTime: "desc"
             }
         });
+
+    }
+
+    async collectPayment(sessionId) {
+
+        await prisma.session.update({
+            where: {
+                id: sessionId
+            },
+            data: {
+                status: "PAID"
+            }
+        });
+
+        console.log(`Payment collected for session ${sessionId}.`);
 
     }
 

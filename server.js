@@ -1,4 +1,5 @@
 const express = require("express");
+const createSettingsRoutes = require("./routes/settingsRoutes");
 const eventBus = require("./events/EventBus");
 const DashboardSocketManager = require("./services/DashboardSocketManager");
 const cors = require("cors");
@@ -37,6 +38,7 @@ sessionManager.setSessionExpiredCallback((pcId) => {
 app.use(express.static(path.join(__dirname, "public")));
 app.use(createDashboardRoutes(gameController));
 app.use(createSessionRoutes(gameController));
+app.use(createSettingsRoutes());
 
 const server = app.listen(PORT, () => {
 

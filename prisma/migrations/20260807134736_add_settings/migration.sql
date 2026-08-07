@@ -1,0 +1,8 @@
+-- CreateTable
+CREATE TABLE "Setting" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT DEFAULT 1,
+    "cafeName" TEXT NOT NULL DEFAULT 'CafeOps',
+    "billingType" TEXT NOT NULL DEFAULT 'PER_MINUTE',
+    "gamingRate" REAL NOT NULL DEFAULT 2,
+    "currency" TEXT NOT NULL DEFAULT 'INR'
+);

@@ -30,6 +30,20 @@ model Session {
 
   gamingCharge   Float    @default(0)
 
-  status String @default("ACTIVE")
+  status         String   @default("ACTIVE")
 
-} 
+}
+
+model Setting {
+
+  id Int @id @default(1)
+
+  cafeName String @default("CafeOps")
+
+  billingType String @default("PER_MINUTE")
+
+  gamingRate Float @default(2)
+
+  currency String @default("INR")
+
+}
