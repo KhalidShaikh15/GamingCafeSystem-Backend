@@ -1,5 +1,6 @@
 const express = require("express");
 const createSettingsRoutes = require("./routes/settingsRoutes");
+const createFoodSettingsRoutes = require("./routes/foodSettingsRoutes");
 const eventBus = require("./events/EventBus");
 const DashboardSocketManager = require("./services/DashboardSocketManager");
 const cors = require("cors");
@@ -10,6 +11,7 @@ const WebSocket = require("ws");
 const GameController = require("./controllers/GameController");
 const ClientManager = require("./services/ClientManager");
 const PcRegistry = require("./services/PcRegistry");
+const createFoodSaleRoutes = require("./routes/foodSaleRoutes");
 
 const app = express();
 app.use(cors());
@@ -39,6 +41,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(createDashboardRoutes(gameController));
 app.use(createSessionRoutes(gameController));
 app.use(createSettingsRoutes());
+app.use(createFoodSettingsRoutes());
+app.use(createFoodSaleRoutes());
 
 const server = app.listen(PORT, () => {
 

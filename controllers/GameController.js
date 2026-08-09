@@ -54,6 +54,12 @@ class GameController {
 
     }
 
+    async getPaidSessions() {
+
+    return await this.sessionService.getPaidSessions();
+
+}
+
     async collectPayment(sessionId) {
 
         await this.sessionService.collectPayment(sessionId);

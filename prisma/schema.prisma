@@ -30,8 +30,17 @@ model Session {
 
   gamingCharge   Float    @default(0)
 
+  foodGrossTotal      Float    @default(0)
+  foodCommissionTotal Float    @default(0)
+  foodNetTotal        Float    @default(0)
+
+  totalAmount    Float    @default(0)
+
+  paidAt         DateTime?
+
   status         String   @default("ACTIVE")
 
+  foodSales      FoodSale[]
 }
 
 model Setting {
@@ -46,4 +55,31 @@ model Setting {
 
   currency String @default("INR")
 
+}
+
+model FoodSettings {
+  id               Int    @id @default(1)
+
+  businessModel    String @default("IN_HOUSE")
+  commissionType   String @default("PERCENTAGE")
+  commissionValue  Float  @default(0)
+}
+
+model FoodSale {
+  id               Int      @id @default(autoincrement())
+
+  sessionId        Int
+  itemName         String
+  unitPrice        Float
+  quantity         Int      @default(1)
+
+  grossAmount      Float
+  commissionType   String
+  commissionValue  Float
+  commissionAmount Float
+  netAmount        Float
+
+  createdAt        DateTime @default(now())
+
+  session          Session  @relation(fields: [sessionId], references: [id])
 }
