@@ -1,4 +1,7 @@
+const { requireOwnerAuth } = require("../middleware/ownerAuthMiddleware");
+
 const express = require("express");
+
 
 function createSessionRoutes(gameController) {
     const router = express.Router();
@@ -215,7 +218,10 @@ function createSessionRoutes(gameController) {
 
     });
 
-    router.get("/paid-sessions", async (req, res) => {
+    router.get(
+    "/paid-sessions",
+    requireOwnerAuth,
+    async (req, res) => {
 
     try {
 

@@ -12,6 +12,7 @@ const GameController = require("./controllers/GameController");
 const ClientManager = require("./services/ClientManager");
 const PcRegistry = require("./services/PcRegistry");
 const createFoodSaleRoutes = require("./routes/foodSaleRoutes");
+const createOwnerAuthRoutes = require("./routes/ownerAuthRoutes");
 
 const app = express();
 app.use(cors());
@@ -43,6 +44,7 @@ app.use(createSessionRoutes(gameController));
 app.use(createSettingsRoutes());
 app.use(createFoodSettingsRoutes());
 app.use(createFoodSaleRoutes());
+app.use(createOwnerAuthRoutes());
 
 const server = app.listen(PORT, () => {
 
